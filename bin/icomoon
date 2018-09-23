@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'icomoon/cli'
+
+Icomoon::Cli::Exec.run(ARGV)

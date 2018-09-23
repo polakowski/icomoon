@@ -7,6 +7,6 @@ group :test do
 end
 
 group :development, :test do
-  gem 'pry', '~> 0.11.3'
+  gem 'pry', '~> 0.11.3', require: false
   gem 'rubocop', '~> 0.58.2', require: false
 end

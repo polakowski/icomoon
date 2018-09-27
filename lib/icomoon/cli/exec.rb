@@ -1,9 +1,9 @@
-require 'optparse'
+require 'icomoon/version'
 
-require_relative 'exec/base'
-require_relative 'exec/init'
-require_relative 'exec/import'
-require_relative 'exec/help'
+require 'icomoon/cli/exec/base'
+require 'icomoon/cli/exec/init'
+require 'icomoon/cli/exec/import'
+require 'icomoon/cli/exec/help'
 
 module Icomoon
   module Cli

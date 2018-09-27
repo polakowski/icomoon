@@ -2,22 +2,29 @@ require 'pry'
 require 'json'
 require 'colorize'
 
-require_relative 'cli/exec_param'
-require_relative 'cli/exec'
-require_relative 'cli/parse_argv'
-require_relative 'cli/survey'
-require_relative 'cli/question'
-require_relative 'cli/logger'
-require_relative 'cli/operation'
-require_relative 'cli/writer'
-require_relative 'cli/config'
-require_relative 'cli/icon'
+require 'icomoon/cli/exec_param'
+require 'icomoon/cli/exec'
+require 'icomoon/cli/parse_argv'
+require 'icomoon/cli/survey'
+require 'icomoon/cli/question'
+require 'icomoon/cli/logger'
+require 'icomoon/cli/operation'
+require 'icomoon/cli/writer'
+require 'icomoon/cli/config'
+require 'icomoon/cli/icon'
 
 module Icomoon
   module Cli
     MANIFEST_FILENAME = 'icomoon.json'
 
+    Error   = Class.new(StandardError)
+    Warning = Class.new(StandardError)
+
     class << self
+      def start(argv)
+        Icomoon::Cli::Exec.run(argv)
+      end
+
       def logs(text)
         logger.log(text, true)
       end

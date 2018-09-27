@@ -12,7 +12,7 @@ module Icomoon
       def read!
         Hash.new.tap do |answers|
           questions.each do |q|
-            IcomoonCli.log "#{'question'.light_black} #{q.name} (#{q.default || 'none'}): "
+            Icomoon::Cli.log "#{'question'.light_black} #{q.name} (#{q.default || 'none'}): "
 
             answer = (gets || '').chomp
             answer = q.default if /\A[\s]*\z/.match?(answer)

@@ -3,7 +3,7 @@ module Icomoon
     module Exec
       class Init < Icomoon::Cli::Exec::Base
         help <<~STRING
-          usage: icomoon init [--force, -f]
+          Usage: icomoon init [--force, -f]
 
           This subprogram will help you to create starting
           files such as icon stylesheet file and config initializer.
@@ -27,7 +27,7 @@ module Icomoon
           dir           = config[:fonts_file_dir]
           manifest_path = File.expand_path(File.join(dir, Icomoon::Cli::MANIFEST_FILENAME))
 
-          IcomoonCli.put_separator
+          Icomoon::Cli.put_separator
 
           Icomoon::Cli::Operation.new do
             ensure_pristine(config, manifest_path)
@@ -57,17 +57,17 @@ module Icomoon
           force_tip = 'use --force (-f) option if you want to override.'
 
           if Icomoon::Cli::Config.config_file_exists?
-            fail Icomoon::Cli::Operation::Error, 'Config file already exists, '\
+            fail Icomoon::Cli::Error, 'Config file already exists, '\
               + force_tip
           end
 
-          if IcomoonCli.file_exists?(config[:icons_file_path])
-            fail Icomoon::Cli::Operation::Error, 'Styles file already exists, '\
+          if Icomoon::Cli.file_exists?(config[:icons_file_path])
+            fail Icomoon::Cli::Error, 'Styles file already exists, '\
               + force_tip
           end
 
-          if IcomoonCli.file_exists?(manifest_path)
-            fail Icomoon::Cli::Operation::Error, 'icomoon.json file already exists, '\
+          if Icomoon::Cli.file_exists?(manifest_path)
+            fail Icomoon::Cli::Error, 'icomoon.json file already exists, '\
               + force_tip
           end
         end

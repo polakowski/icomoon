@@ -17,7 +17,7 @@ module Icomoon
         end
 
         if argv.count.nonzero?
-          IcomoonCli.error "Unrecognized arguments: #{argv.join(', ')}"
+          Icomoon::Cli.error "Unrecognized arguments: #{argv.join(', ')}"
         end
 
         result

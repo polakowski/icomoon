@@ -1,9 +1,6 @@
 module Icomoon
   module Cli
     class Operation
-      Error   = Class.new(StandardError)
-      Warning = Class.new(StandardError)
-
       @@warnings = []
       @@errors   = []
       @@skip_all = false
@@ -16,30 +13,29 @@ module Icomoon
 
         begin
           yield
-        rescue Icomoon::Cli::Operation::Error => error
+          puts '✔'.green if name
+        rescue Icomoon::Cli::Error => error
           @@errors << error
           puts '✘'.red if name
           Icomoon::Cli::Operation.skip_all!
-        rescue Icomoon::Cli::Operation::Warning => warning
+        rescue Icomoon::Cli::Warning => warning
           @@warnings << warning
           puts '✘'.red if name
-        else
-          puts '✔'.green if name
         end
       end
 
       def self.dump_warnings
         while (warning = @@warnings.shift)
-          IcomoonCli.logs "#{'Warning:'.yellow} #{warning.message}"
+          Icomoon::Cli.logs "#{'Warning:'.yellow} #{warning.message}"
         end
       end
 
-      def self.dump_errors
+      def self.dump_errors(exit_code = nil)
         while (error = @@errors.shift)
-          IcomoonCli.logs "#{'Error:'.red} #{error.message}"
+          Icomoon::Cli.logs "#{'Error:'.red} #{error.message}"
         end
 
-        exit 1
+        exit(exit_code) if exit_code
       end
 
       def self.warn!(message)

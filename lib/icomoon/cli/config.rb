@@ -6,7 +6,7 @@ module Icomoon
       class << self
         def read
           if !File.exists? config_file_full_path
-            fail Icomoon::Cli::Operation::Error, 'Config file not found.'
+            fail Icomoon::Cli::Error, 'Config file not found.'
           end
 
           content = JSON.parse(File.read(config_file_full_path))

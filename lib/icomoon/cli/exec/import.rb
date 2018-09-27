@@ -8,7 +8,7 @@ module Icomoon
         EXTENSIONS = %w[eot ttf woff svg].freeze
 
         help <<~STRING
-          usage: icomoon import [--major]
+          Usage: icomoon import [--major]
 
           This subprogram imports fonts files and JSON manifest from given
           directory. It also updates icon font version.
@@ -22,8 +22,8 @@ module Icomoon
         param :source_dir, '--dir', '-d'
 
         def run
-          if source_dir.nil?
-            fail Icomoon::Cli::Operation::Error, 'Source directory argument (--dir, -d) is required.'
+          Icomoon::Cli::Operation.new do
+            validate_params
           end
 
           Icomoon::Cli::Operation.new do
@@ -51,8 +51,8 @@ module Icomoon
             validate_and_print_code
           end
 
-          Icomoon::Cli::Operation.dump_errors
           Icomoon::Cli::Operation.dump_warnings
+          Icomoon::Cli::Operation.dump_errors
         end
 
         private
@@ -66,7 +66,7 @@ module Icomoon
         def check_source_file(path)
           absolute_path = File.join(source_dir, config.icons_set_name, path)
           return true if File.exists?(absolute_path)
-          fail Icomoon::Cli::Operation::Error, "File not found: #{absolute_path}"
+          fail Icomoon::Cli::Error, "File not found: #{absolute_path}"
         end
 
         def copy_file(filename, source_subdir: '', target_filename: filename)
@@ -75,7 +75,7 @@ module Icomoon
             File.expand_path(File.join(config.fonts_file_dir, target_filename))
           )
         rescue StandardError => e
-          fail Icomoon::Cli::Operation::Error, e.message
+          fail Icomoon::Cli::Error, e.message
         end
 
         def validate_and_print_code
@@ -124,6 +124,12 @@ module Icomoon
           end.join("\n").cyan
 
           puts "\nAdd this to #{config.icons_file_path}:\n\n#{code}"
+        end
+
+        def validate_params
+          if source_dir.nil?
+            fail Icomoon::Cli::Error, 'Source directory argument (--dir, -d) is required.'
+          end
         end
 
         def array_to_icons(array)

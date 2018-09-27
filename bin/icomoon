@@ -2,4 +2,4 @@
 
 require 'icomoon/cli'
 
-Icomoon::Cli::Exec.run(ARGV)
+Icomoon::Cli.start(ARGV)
